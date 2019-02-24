@@ -60,7 +60,19 @@ RUN set -xe \
         pdo_pgsql \
         mbstring \
         soap \
-        iconv
+        iconv \ 
+        json \
+        zip \
+        curl \
+        xml \
+        sockets \
+        soap \
+        simplexml \
+        opcache \
+        mcrypt \
+        imap \
+        iconv \
+        bz2
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
 ENV RABBITMQ_VERSION v0.9.0
