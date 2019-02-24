@@ -63,24 +63,23 @@ RUN set -xe \
         iconv \ 
         json \
         zip \
-        curl \
         xml \
         sockets \
         soap \
         simplexml \
         opcache \
-        mcrypt \
-        imap \
-        iconv \
-        bz2
+        iconv
+
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
+
 ENV RABBITMQ_VERSION v0.9.0
 RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
         && cd /tmp/rabbitmq \
         && mkdir build && cd build \
         && cmake .. \
         && cmake --build . --target install
+
 ENV PHP_AMQP_VERSION v1.9.3
 RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.git /tmp/php-amqp \
         && cd /tmp/php-amqp \
@@ -90,6 +89,7 @@ RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.
         && make install
 # Copy configuration
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
+
 ENV PHP_REDIS_VERSION 4.2.0
 RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
@@ -98,6 +98,7 @@ RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis
         && make  \
         && make install \
         && make test
+
 # Copy configuration
 COPY config/redis.ini /usr/local/etc/php/conf.d/
 ENV PHP_PROTOBUF_VERSION v0.12.3
@@ -108,6 +109,7 @@ RUN git clone --branch ${PHP_PROTOBUF_VERSION} https://github.com/allegro/php-pr
         && make  \
         && make install \
         && make test
+
 # Copy configuration
 COPY config/protobuf.ini /usr/local/etc/php/conf.d/
 RUN pecl install swoole

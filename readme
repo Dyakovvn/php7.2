@@ -12,16 +12,13 @@ My build php7.2 image with:
  - iconv
  - json
  - zip
- - curl
  - xml
  - sockets
  - soap
  - simplexml
  - opcache
  - mcrypt
- - imap
  - iconv
- - bz2
 
 AND addons like
 
