@@ -114,6 +114,9 @@ RUN git clone --branch ${PHP_PROTOBUF_VERSION} https://github.com/allegro/php-pr
 COPY config/protobuf.ini /usr/local/etc/php/conf.d/
 RUN pecl install swoole
 COPY config/swoole.ini /usr/local/etc/php/conf.d/
+RUN docker-php-ext-install -j$(nproc) zip
+RUN apk add --no-cache --virtual .persistent-deps git
+
 RUN apk del .build-deps \
     && rm -rf /tmp/* \
     && rm -rf /app \
@@ -126,5 +129,7 @@ RUN apk del .build-deps \
 COPY config/php7.ini /usr/local/etc/php/conf.d/
 COPY config/fpm/php-fpm.conf /usr/local/etc/
 COPY config/fpm/pool.d /usr/local/etc/pool.d
+
+
 VOLUME ["/var/www"]
 WORKDIR /var/www
