@@ -115,7 +115,7 @@ COPY config/protobuf.ini /usr/local/etc/php/conf.d/
 RUN pecl install swoole
 COPY config/swoole.ini /usr/local/etc/php/conf.d/
 RUN docker-php-ext-install -j$(nproc) zip
-RUN apk add --no-cache --virtual .persistent-deps git mysql-client rsync 
+RUN apk add --no-cache --virtual .persistent-deps git mysql-client rsync p7zip openssh-client
 RUN apk del .build-deps \
     && rm -rf /tmp/* \
     && rm -rf /app \
