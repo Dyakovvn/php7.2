@@ -116,6 +116,16 @@ RUN pecl install swoole
 COPY config/swoole.ini /usr/local/etc/php/conf.d/
 RUN docker-php-ext-install -j$(nproc) zip
 RUN apk add --no-cache --virtual .persistent-deps git mysql-client rsync p7zip openssh-client
+
+RUN xhprof_ext_ver="5.0-beta3"; \
+    mkdir -p /usr/src/php/ext/tideways_xhprof; \
+    xhprof_url="https://github.com/tideways/php-xhprof-extension/archive/v${xhprof_ext_ver}.tar.gz"; \
+    wget -qO- "${xhprof_url}" | tar xz --strip-components=1 -C /usr/src/php/ext/tideways_xhprof; \
+    docker-php-ext-install tideways_xhprof; \
+    apk add libmcrypt-dev; \
+    pecl install mcrypt-1.0.1; \
+    docker-php-ext-enable mcrypt;
+
 RUN apk del .build-deps \
     && rm -rf /tmp/* \
     && rm -rf /app \
