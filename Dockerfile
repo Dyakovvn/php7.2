@@ -124,9 +124,22 @@ RUN xhprof_ext_ver="5.0-beta3"; \
     docker-php-ext-install tideways_xhprof; \
     apk add libmcrypt-dev; \
     pecl install mcrypt-1.0.1; \
-    docker-php-ext-enable mcrypt;
+    docker-php-ext-enable mcrypt
 
-RUN pecl install apcu-5.1.8 && docker-php-ext-enable apcu
+RUN apk add freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev libtool make \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install pdo_pgsql pdo_mysql bcmath opcache intl zip gd
+
+# Install APCu and APC backward compataibility
+RUN  pecl install apcu \
+    && pecl install apcu_bc-1.0.3 \
+    && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
+    && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+
+RUN pecl install xdebug-2.6.0beta1 \
+    && docker-php-ext-enable xdebug
 
 RUN apk del .build-deps \
     && rm -rf /tmp/* \
