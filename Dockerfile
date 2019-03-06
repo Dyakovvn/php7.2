@@ -126,6 +126,8 @@ RUN xhprof_ext_ver="5.0-beta3"; \
     pecl install mcrypt-1.0.1; \
     docker-php-ext-enable mcrypt;
 
+RUN pecl install apcu-5.1.8 && docker-php-ext-enable apcu
+
 RUN apk del .build-deps \
     && rm -rf /tmp/* \
     && rm -rf /app \
