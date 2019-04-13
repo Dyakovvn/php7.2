@@ -126,7 +126,7 @@ RUN xhprof_ext_ver="5.0-beta3"; \
     pecl install mcrypt-1.0.1; \
     docker-php-ext-enable mcrypt
 
-RUN apk add freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev libtool make \
+RUN apk add freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev imagemagick libtool make \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && docker-php-ext-configure intl \
