@@ -7,9 +7,10 @@ RUN docker-php-ext-configure opcache --enable-opcache \
 # Copy configuration
 COPY config/opcache.ini $PHP_INI_DIR/conf.d/
 
-RUN apk add freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev imagemagick libtool make \
+RUN apk add freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev imagemagick libtool make  git mysql-client rsync p7zip openssh-client \
     && pecl install imagick \
-    && docker-php-ext-enable imagick
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install zip
 
 # Install APCu and APC backward compataibility
 RUN  pecl install apcu \
