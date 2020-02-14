@@ -19,3 +19,9 @@ RUN  pecl install apcu \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+COPY config/php7.ini /usr/local/etc/php/conf.d/
+COPY config/fpm/php-fpm.conf /usr/local/etc/
+COPY config/fpm/pool.d /usr/local/etc/pool.d
+VOLUME ["/var/www"]
+WORKDIR /var/www
