@@ -7,7 +7,7 @@ FROM prooph/php:7.2-fpm
 # # Copy configuration
 # COPY config/opcache.ini $PHP_INI_DIR/conf.d/
 
-RUN apk add freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev imagemagick libtool make  git mysql-client rsync p7zip openssh-client \
+RUN apk add --update npm freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev autoconf g++ imagemagick-dev imagemagick libtool make git mysql-client rsync p7zip openssh-client \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && docker-php-ext-install zip
@@ -17,3 +17,5 @@ RUN  pecl install apcu \
     && pecl install apcu_bc-1.0.3 \
     && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
     && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
